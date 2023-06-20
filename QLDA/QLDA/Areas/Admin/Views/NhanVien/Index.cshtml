@@ -1,0 +1,92 @@
+﻿@model IEnumerable<QLDA.Models.tbl_NhanVien>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý nhân viên</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin/Home">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý nhân viên</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">@Html.ActionLink("Thêm mới nhân viên", "Create")</h3>
+                        <h3 class="card-title">@*<button id="create" class="btn btn-warning btn-sm">Thêm mới</button>*@</h3>
+                        <div class="card-tools">
+                            @using (Html.BeginForm())
+                            {
+                                <div class="input-group input-group-sm" style="width: 250px;">
+                                    @*<input type="text" name="table_search" class="form-control float-right" placeholder="Tìm kiếm">*@
+                                    @Html.TextBox("searchString", "", htmlAttributes: new { @class = "form-control float-right", @placeholder = "Tìm kiếm" })
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ và tên</th>
+                                    <th>Ảnh đại diện</th>
+                                    <th>Chức vụ</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Chức năng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int i = 1;}
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@item.Ho  @item.Ten</td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.Ho + item.Ten)</td>*@
+                                        <td><img style="width: 100px" src="~/Content/images/avatars/@item.AnhDaiDien" /></td>
+                                        <td>@Html.DisplayFor(modelItem => item.tbl_ChucVu.TenChucVu)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+
+                                        <td>
+
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.MaNV }, new { @class = "btn btn-primary btn-sm" })
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.MaNV }, new { @class = "btn btn-danger btn-sm" })
+
+                                        </td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

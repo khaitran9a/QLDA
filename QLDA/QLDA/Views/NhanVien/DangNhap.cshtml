@@ -1,0 +1,110 @@
+﻿
+@model QLDA.Models.tbl_NhanVien
+
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .login-frame {
+        width: 1000px;
+        margin: 50px auto;
+        padding: 40px;
+    }
+
+    .form-group {
+        width: 100%;
+        margin: 20px;
+    }
+</style>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .SignUp {
+        margin: auto;
+        transform: translateY(100px);
+        padding: 20px;
+        border: 1px solid #F33F3F;
+        z-index: 1000;
+        height: fit-content;
+        border-radius: 2px;
+        box-shadow: 0 0 0 0.2rem rgb(243 63 63 / 25%);
+    }
+
+    .form-signup > h2 {
+        color: #F33F3F;
+    }
+
+    .signup-row {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .signup-row-title {
+        padding: 0;
+    }
+
+    .signup-input:focus {
+        border-color: #F33F3F;
+        box-shadow: 0 0 0 0.2rem rgb(243 63 63 / 25%);
+    }
+
+    .signup-input::placeholder {
+        font-size: 14px;
+    }
+
+    .signup-btn {
+        margin-top: 40px;
+        margin-right: 15px;
+        margin-left: 15px;
+        padding: 5px 10px;
+        width: 110px
+    }
+</style>
+
+
+<br />
+
+<div class=" bg-white SignUp  col-md-6 mt-5">
+    @using (Html.BeginForm("DangNhap", "NhanVien", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal form-signup">
+            <h2>Đăng Nhập</h2>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-11">
+                    <label class="control-label col-md-5 signup-row-title">Tên đăng nhập</label>
+                    @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control", @placeholder = "User name" } })
+                    @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-11">
+                    <label class="control-label col-md-5 signup-row-title">Mật khẩu</label>
+                    @Html.TextBoxFor(model => model.MatKhau, new { @class = "form-control", Type = "password", @placeholder = "Password" })
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                    <p style="color:red;">@ViewData["error"]</p>
+                </div>
+            </div>
+
+            <div class="form-group d-flex signup-row pr-5" style="justify-content: right">
+
+                @Html.ActionLink("Đăng Ký", "DangKy", "NhanVien", null, new { @class = "btn  btn-danger signup-btn" })
+
+                <input id="signup" type="submit" name="submit" value="Đăng Nhập" class="btn btn-info signup-btn mr-4" />
+
+            </div>
+
+        </div>
+    }
+</div>

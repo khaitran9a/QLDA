@@ -1,0 +1,111 @@
+﻿@model QLDA.Models.tbl_DuAn
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý dự án</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/Admin/Home">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Thêm mới</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid card col-md-10 m-auto">
+
+        <form action="" method="post" enctype="multipart/form-data" class="col-md-10 m-auto">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("TenDuAn", "Tên dự án", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenDuAn, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TenDuAn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    @Html.Label("Thumbnail", "Hình ảnh dự án", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" class="" />
+                        @* @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "", type = "file", id = "uploadhinh", name = "uploadhinh", accept = "image/*" } })*@
+                        @Html.ValidationMessageFor(model => model.Thumbnail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("KinhPhi", "Kinh phí dự án", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.KinhPhi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.KinhPhi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("ThoiGianDuKien", "Thời gian dự kiến", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ThoiGianDuKien, new { htmlAttributes = new { @class = "form-control", @min="0" } })
+                        @Html.ValidationMessageFor(model => model.ThoiGianDuKien, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("NgayKhoiCong", "Ngày khởi công", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NgayKhoiCong, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NgayKhoiCong, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                    @Html.Label("TrangThaiDuAn", "Trạng thái dự án", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.TrangThaiDuAn)
+                            @Html.ValidationMessageFor(model => model.TrangThaiDuAn, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="form-group d-flex col-md-10">
+                    <div class="col-md-11 pl-0">
+                        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary m-l" })
+                    </div>
+                    <div class="col-md-offset-2">
+                        <input type="submit" value="Create" class="btn btn-default m-r" />
+                    </div>
+                </div>
+            </div>
+            }
+        </form>
+       
+    </div>
+</section>

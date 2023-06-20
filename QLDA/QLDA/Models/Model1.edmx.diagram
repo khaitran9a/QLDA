@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d776c4ff20714af18a6f6da24c03224f" Name="Diagram1">
+        <EntityTypeShape EntityType="QLDAModel.sysdiagram" Width="1.5" PointX="8.375" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_ChucVu" Width="1.5" PointX="1.5" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_DuAn" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_GhiChuDuAn" Width="1.5" PointX="4.875" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_NhanVien" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_ThamGiaDuAn" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_NhanVien_tbl_ChucVu" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_GhiChuDuAn_tbl_DuAn" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_ThamGiaDuAn_tbl_DuAn" ManuallyRouted="false" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_ThamGiaDuAn_tbl_NhanVien" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

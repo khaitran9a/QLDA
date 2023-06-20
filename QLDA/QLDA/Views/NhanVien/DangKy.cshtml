@@ -1,0 +1,142 @@
+﻿@model QLDA.Models.tbl_NhanVien
+
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .SignUp {
+        margin: auto;
+        transform: translateY(100px);
+        padding: 20px;
+        border: 1px solid #F33F3F;
+        z-index: 1000;
+        height: fit-content;
+        border-radius: 2px;
+        box-shadow: 0 0 0 0.2rem rgb(243 63 63 / 25%);
+    }
+
+    .form-signup > h2 {
+        color: #F33F3F;
+    }
+
+    .signup-row {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .signup-row-title {
+        padding: 0;
+    }
+
+    .signup-input:focus {
+        border-color: #F33F3F;
+        box-shadow: 0 0 0 0.2rem rgb(243 63 63 / 25%);
+    }
+
+    .signup-input::placeholder {
+        font-size: 14px;
+    }
+
+    .signup-btn {
+        margin-top: 40px;
+        margin-right: 15px;
+        margin-left: 15px;
+        padding: 5px 10px;
+        width: 110px
+    }
+</style>
+
+
+<section class="content">
+    <div class="SignUp row">
+
+        <form action="" method="post" enctype="multipart/form-data" class="col-md-10" style="margin: 0 8%">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h2>Đăng ký thành viên</h2>
+
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("Ho", "Họ và tên đệm", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Ho, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập vào họ", required= "required" } })
+                        @Html.ValidationMessageFor(model => model.Ho, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Ten", "Tên", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập vào tên" } })
+                        @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("TenDangNhap", "Tên đăng nhập", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập vào tên đăng nhập" } })
+                        @Html.ValidationMessageFor(model => model.TenDangNhap, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.Label("MatKhau", "Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control", @type = "password", placeholder = "Nhập vào mật khẩu" } })
+                        @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Email", "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", placeholder = "Nhập vào email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("NgaySinh", "Ngày sinh", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control", @type="date" } })
+                        @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("AnhDaiDien", "Ảnh đại diện", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="uploadhinh" name="uploadhinh" accept="image/*" class="" />
+                        @* @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "", type = "file", id = "uploadhinh", name = "uploadhinh", accept = "image/*" } })*@
+                        @Html.ValidationMessageFor(model => model.AnhDaiDien, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group d-flex signup-row justify-content-between">
+                    @Html.ActionLink("Quay lại", "Index", "Home", null, new { @class = "btn  btn-secondary signup-btn" })
+                    <div class="col-md-6">
+                        @Html.ActionLink("Đăng nhập", "Login", "SignUp", null, new { @class = "btn  btn-danger signup-btn" })
+
+                        <input id="signup" type="submit" name="submit" value="Đăng ký" class="btn btn-info signup-btn" />
+                    </div>
+                </div>
+            </div>
+            }
+        </form>
+
+    </div>
+</section>
+
