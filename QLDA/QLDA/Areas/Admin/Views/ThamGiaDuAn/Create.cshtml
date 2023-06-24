@@ -57,9 +57,10 @@
             </div>
         }
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div>
+        @Html.ActionLink("Danh sách ", "Index", new { @class = "btn btn-sm btn-primary" })
+        <a class = "btn btn-sm btn-secondary" href='javascript:history.go(-1)'>Quay lại</a>
+    </div>
 
         </div>
     </section>

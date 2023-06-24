@@ -68,6 +68,14 @@ namespace QLDA.Areas.Admin.Controllers
             return PartialView("_ListNhanVien", items);
         }
 
+        public ActionResult dsNhanVienInDuAn(int id)
+        {
+            var query1 = db.tbl_ThamGiaDuAn.Where(y => y.MaDuAn == id)
+                          .Select(x => x.MaNV);
+            var items = db.tbl_NhanVien.Where(x => query1.Contains(x.MaNV));
+            return PartialView("_dsNhanVienThamGia", items);
+        }
+
         [HttpGet]
         public JsonResult sortByKinhPhi()
         {

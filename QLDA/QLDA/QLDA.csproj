@@ -138,10 +138,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ChucVuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CongViecController.cs" />
     <Compile Include="Areas\Admin\Controllers\DuAnController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GhiChuDuAnController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanVienThamGiaCongViecController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThamGiaDuAnController.cs" />
+    <Compile Include="Controllers\DuAnController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
     <Compile Include="Global.asax.cs">
@@ -171,6 +175,9 @@
     <Compile Include="Models\tbl_ChucVu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_CongViec.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_DuAn.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -178,6 +185,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_NhanVien.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_NhanVienThamGiaCongViec.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_ThamGiaDuAn.cs">
@@ -2111,6 +2121,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -2291,6 +2302,27 @@
     <Content Include="Areas\Admin\Views\ThamGiaDuAn\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ThamGiaDuAn\Create.cshtml" />
     <Content Include="Areas\Admin\Views\DuAn\_ListNhanVien.cshtml" />
+    <Content Include="Areas\Admin\Views\ThamGiaDuAn\DeleteById.cshtml" />
+    <Content Include="Areas\Admin\Views\DuAn\_dsNhanVienThamGia.cshtml" />
+    <Content Include="Areas\Admin\Views\ThamGiaDuAn\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ThamGiaDuAn\_dsNhanVien.cshtml" />
+    <Content Include="Areas\Admin\Views\ThamGiaDuAn\_dsDuAn.cshtml" />
+    <Content Include="Areas\Admin\Views\GhiChuDuAn\_dsGhiChu.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\_dsCongViec.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\_dsNhanVienThamGia.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\_dsNhanVienThamGiaCongViec.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\_listDuAn.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViecCap2\_dsCongViecCap2.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\_dsNhanVien.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\_dsDuAn.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2322,6 +2354,9 @@
     <Content Include="Views\NhanVien\Edit.cshtml" />
     <Content Include="Views\NhanVien\Index.cshtml" />
     <Content Include="Views\NhanVien\DangNhap.cshtml" />
+    <Content Include="Views\Home\_HomeDuAn.cshtml" />
+    <Content Include="Views\Home\_Home.cshtml" />
+    <Content Include="Views\DuAn\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

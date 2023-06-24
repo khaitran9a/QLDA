@@ -1,0 +1,13 @@
+﻿@model IEnumerable<QLDA.Models.tbl_DuAn>
+
+@foreach (var item in Model)
+{
+    <div class="object">
+        <a href="/DuAn/Details/@item.MaDuAn"><img style="max-height: 200px" src="~/Content/images/projects/@item.Thumbnail" alt="Image 1"></a>
+        <h2>@item.TenDuAn</h2>
+
+        <p>@item.NgayKhoiCong</p>
+    </div>
+}
+
+

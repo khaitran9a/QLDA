@@ -1,0 +1,9 @@
+﻿
+@model IEnumerable<QLDA.Models.tbl_NhanVien>
+
+@foreach (var item in Model)
+{
+    <button  type="submit" class="btn btn-default d-block col-md-12" id="sapXepTheoKinhPhi" onclick ="loadByNv(@item.MaNV)">@item.Ho @item.Ten </button>
+
+    @*<option class="form-control" onclick="LoadByNv(@item.MaNV)" value="@item.MaNV">@item.Ho @item.Ten </option>*@
+}

@@ -1,0 +1,11 @@
+﻿@model IEnumerable<QLDA.Models.tbl_NhanVien>
+
+@foreach (var item in Model)
+{
+
+    <option class="form-control" value="@item.MaNV">@item.Ho @item.Ten </option>
+
+
+}
+
+

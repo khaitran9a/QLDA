@@ -19,6 +19,7 @@ namespace QLDA.Models
         {
             this.tbl_GhiChuDuAn = new HashSet<tbl_GhiChuDuAn>();
             this.tbl_ThamGiaDuAn = new HashSet<tbl_ThamGiaDuAn>();
+            this.tbl_CongViec = new HashSet<tbl_CongViec>();
         }
     
         public int MaDuAn { get; set; }
@@ -33,5 +34,7 @@ namespace QLDA.Models
         public virtual ICollection<tbl_GhiChuDuAn> tbl_GhiChuDuAn { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_ThamGiaDuAn> tbl_ThamGiaDuAn { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_CongViec> tbl_CongViec { get; set; }
     }
 }

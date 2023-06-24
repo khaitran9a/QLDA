@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QLDA.Models.tbl_ThamGiaDuAn>
+﻿@model IEnumerable<QLDA.Models.tbl_NhanVienThamGiaCongViec>
 
 @{
     ViewBag.Title = "Index";
@@ -55,12 +55,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Quản nhân viên tham gia dự án</h1>
+                <h1 class="m-0">Quản nhân viên tham gia công việc</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/Admin/Home">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Quản lý nhân viên</li>
+                    <li class="breadcrumb-item active">Quản lý nhân viên - công việc</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -79,30 +79,46 @@
                         <div class="card-tools">
 
                             <div class="d-flex justify-content-between">
-                                <div class="input-group input-group-sm mr-5" style="width: 100px;">
+                                <!--<div class="input-group input-group-sm mr-5" style="width: 100px;">
                                     <div class="dropdown">
                                         <button class="dropbtn">Nhân viên &#8744; </button>
-                                        <div class="dropdown-content">
-                                            @{ Html.RenderAction("dsNhanVien", "ThamGiaDuAn");}
-                                            <a href="#">Link 3</a>
+                                        <div class="dropdown-content">-->
+                                            @*@{ Html.RenderAction("dsNhanVien", "ThamGiaDuAn");}*@
+                                            <!--<a href="#">Link 3</a>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="input-group input-group-sm mr-5" style="width: 100px;">
                                     <div class="dropdown">
-                                        <button class="dropbtn">Dự án &#8744; </button>
+                                        <button class="dropbtn">Công việc &#8744; </button>
                                         <div class="dropdown-content">
                                             @{ Html.RenderAction("dsDuAn", "ThamGiaDuAn");}
-                                            <a href="#">Link 3</a>
+
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
+
+                                <form class="form-group d-flex mr-4 " style="height:28px; box-sizing:border-box" id="add" action="" method="post">
+                                    <select class="" id="MaNV" name="MaNV">
+                                        @*@Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })*@
+                                        @{ Html.RenderAction("dsNhanVien", "NhanVienThamGiaCongViec");}
+
+                                    </select>
+
+                                    <select class="" id="MaDA" name="MaDA">
+                                        @*@Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })*@
+                                        @{ Html.RenderAction("dsDuAn", "NhanVienThamGiaCongViec");}
+
+                                    </select>
+
+                                    <input type="button" value="Lọc" id="findByDaNv" onclick="FindByDaNv()" />
+                                </form>
 
                                 @*@Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })*@
                                 @*@{ Html.RenderAction("dsNhanVien", "DuAn");}*@
 
-                                <div class="input-group input-group-sm" style="width: 250px;">
+                                <div class="input-group input-group-sm" style="width: 250px; height:30px;  ">
                                     <input type="text" id="txtSearch" class="form-control float-right" placeholder="Tìm kiếm theo tên dự án">
                                     @*@Html.TextBox("searchString", "", htmlAttributes: new { @class = "form-control float-right", @id = "txtSearch", @placeholder = "Tìm kiếm theo tên dự án" })*@
 
@@ -122,14 +138,15 @@
                             <thead>
                                 <tr>
                                     <th>STT</th>
+                                    <th>Công việc</th>
                                     <th>Nhân viên</th>
-                                    <th>Dự án</th>
-                                    <th>Ngày tham gia</th>
-                                    <th>Ghi Chú</th>
+                                    <th>Trang thái</th>
+                                    <th>Ngày bắt đầu</th>
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody id="dsThamGia">
+
                             </tbody>
                         </table>
                     </div>
@@ -152,6 +169,8 @@
             loadDsThamGia(tuKhoa);
             window.loadByNv = loadByNv;
             window.loadByDa = loadByDa;
+            //window.FindByDaNv = FindByDaNv;
+            
         });
         $("#btnSearch").click(function () {
             $('#dsThamGia').empty();
@@ -167,7 +186,7 @@
 
         function loadDsThamGia(search) {
             $.ajax({
-                url: '/Admin/ThamGiaDuAn/DsThamGia',
+                url: '/Admin/NhanVienThamGiaCongViec/DsThamGia',
                 type: 'get',
                 data: {
                     tuKhoa: search
@@ -179,11 +198,11 @@
                         $.each(data.dsThamGia, function (k, v) {
                             let tr = '<tr>'
                             tr += '<td>' + i + '</td>';
-                            tr += '<td>' + v.TenDuAN + '</td>';
+                            tr += '<td>' + v.TenCongViec + '</td>';
+                            tr += '<td>' + v.TenDuAn + '</td>';
                             tr += '<td>' + v.TenNhanVien + '</td>';
                             tr += '<td>' + v.NgayThamGia + '</td>';
-                            tr += '<td>' + v.GhiChu + '</td>';
-                            tr += '<td>' + v.MaDuAn + '</td>';
+                            
                             tr += '<td>';
                             tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Edit?mada=' + v.MaDuAn + '&manv=' + v.MaNhanVien + '">' + 'Edit</a>';
                             tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Delete/' + v.MaDuAn + '/' + v.MaNhanVien + '">' + 'Delete</a>';
@@ -261,6 +280,45 @@
                             i++;
                             $('#dsThamGia').append(tr);
 
+                        });
+                    }
+                }
+            });
+        }
+
+        function FindByDaNv(){
+            _maNV = $("#MaNV").val();
+            _maDA = $("#MaDA").val();
+            
+            $.ajax({
+                url: '/Admin/NhanVienThamGiaCongViec/FindByDaNv',
+                type: 'get',
+                data: { idDA: _maDA, idNV: _maNV },
+                success: function (data) {
+                    $('#dsThamGia').empty();
+                    if (data.code == 200) {
+                        var i = 1;
+                        $.each(data.dsThamGia, function (k, v) {
+                            console.log(data);
+                            let tr = '<tr>'
+                            if (data != null) {
+                                tr += '<td>' + i + '</td>';
+                                tr += '<td>' + v.TenCongViec + '</td>';
+                                tr += '<td>' + v.TenDuAn + '</td>';
+                                tr += '<td>' + v.TenNhanVien + '</td>';
+                                tr += '<td>' + v.NgayThamGia + '</td>';
+
+                                tr += '<td>';
+                                tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Edit?mada=' + v.MaDuAn + '&manv=' + v.MaNhanVien + '">' + 'Edit</a>';
+                                tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Delete/' + v.MaDuAn + '/' + v.MaNhanVien + '">' + 'Delete</a>';
+                                tr += '</td>';
+                            }
+                            if (data == null) {
+                                tr += '<td> nhân viên:' + v.TenNhanVien + ' chưa tham gia công việc nào trong dự án ' + v.TenDuAn +'</td > ';
+                            }
+                            
+                            i++;
+                            $('#dsThamGia').append(tr);
                         });
                     }
                 }

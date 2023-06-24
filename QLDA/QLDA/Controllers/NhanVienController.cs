@@ -41,11 +41,11 @@ namespace QLDA.Controllers
                 if (_nV == null)
                 {
                     var check = db.tbl_NhanVien.FirstOrDefault(c => c.Email == nv.Email);
-                    if (check != null)
-                    {   
-                        ViewBag.error = "Email đã có người sử dụng";
-                        return View();
-                    }
+                    //if (check != null)
+                    //{   
+                    //    ViewBag.error = "Email đã có người sử dụng";
+                    //    return View();
+                    //}
 
                     //if (IsEmail(nv.Email) == false)
                     //{
@@ -64,12 +64,6 @@ namespace QLDA.Controllers
                     {
                         TenDangNhap = nv.TenDangNhap,
                         MatKhau = PasswordEncryption(pass),
-
-                        Ho = nv.Ho,
-                        Ten = nv.Ten,
-                        Email = nv.Email,
-                        SoDienThoai = nv.SoDienThoai,
-                        //NgaySinh = DateTime.UtcNow,
                        
                         DiaChi = nv.DiaChi,
                         NgaySinh = nv.NgaySinh
@@ -133,10 +127,10 @@ namespace QLDA.Controllers
                 if (data != null)
                 {
                     //add session
-
                     Session["FullName"] = data.Ho + data.Ten;
                     Session["Email"] = data.Email;
                     Session["UserID"] = data.MaNV;
+                    Session["TenDangNhap"] = data.TenDangNhap;
                     //if (data.IsAdmin == true)
                     //{
                     //    Session["Admin"] = "Admin";
@@ -158,6 +152,23 @@ namespace QLDA.Controllers
             }
 
         }
+
+
+        [AllowAnonymous]
+        public ActionResult LogOut()
+        {
+            Response.AddHeader("Cache-Control", "no-cache, no-store,must-revalidate");
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Expires", "0");
+            Session.Abandon();
+
+            Session.Clear();
+            Response.Cookies.Clear();
+            Session.RemoveAll();
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
 
 

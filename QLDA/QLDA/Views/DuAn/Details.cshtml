@@ -1,0 +1,78 @@
+﻿@model QLDA.Models.tbl_DuAn
+
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid card col-md-10 m-auto">
+
+        <div>
+            <h4 class="mt-3">Chi tiết dự án</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.TenDuAn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TenDuAn)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Thumbnail)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Thumbnail)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.KinhPhi)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.KinhPhi)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ThoiGianDuKien)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ThoiGianDuKien)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NgayKhoiCong)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NgayKhoiCong)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TrangThaiDuAn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TrangThaiDuAn)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.MaDuAn }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+</section>

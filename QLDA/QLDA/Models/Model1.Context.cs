@@ -31,5 +31,7 @@ namespace QLDA.Models
         public virtual DbSet<tbl_GhiChuDuAn> tbl_GhiChuDuAn { get; set; }
         public virtual DbSet<tbl_NhanVien> tbl_NhanVien { get; set; }
         public virtual DbSet<tbl_ThamGiaDuAn> tbl_ThamGiaDuAn { get; set; }
+        public virtual DbSet<tbl_CongViec> tbl_CongViec { get; set; }
+        public virtual DbSet<tbl_NhanVienThamGiaCongViec> tbl_NhanVienThamGiaCongViec { get; set; }
     }
 }

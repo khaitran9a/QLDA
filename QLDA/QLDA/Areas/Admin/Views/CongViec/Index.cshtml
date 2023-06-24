@@ -1,10 +1,8 @@
-﻿@model IEnumerable<QLDA.Models.tbl_ThamGiaDuAn>
-
+﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 
 <style>
     .dropbtn {
@@ -50,17 +48,16 @@
     }
 </style>
 
-
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Quản nhân viên tham gia dự án</h1>
+                <h1 class="m-0">Quản lý công việc</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/Admin/Home">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Quản lý nhân viên</li>
+                    <li class="breadcrumb-item active">Quản lý công việc</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -73,34 +70,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">@Html.ActionLink("Thêm mới quan hệ", "Create")</h3>
+                        <h3 class="card-title">@Html.ActionLink("Thêm mới công việc", "Create")</h3>
                         <h3 class="card-title">@*<button id="create" class="btn btn-warning btn-sm">Thêm mới</button>*@</h3>
-
                         <div class="card-tools">
 
                             <div class="d-flex justify-content-between">
                                 <div class="input-group input-group-sm mr-5" style="width: 100px;">
                                     <div class="dropdown">
-                                        <button class="dropbtn">Nhân viên &#8744; </button>
-                                        <div class="dropdown-content">
-                                            @{ Html.RenderAction("dsNhanVien", "ThamGiaDuAn");}
-                                            <a href="#">Link 3</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="input-group input-group-sm mr-5" style="width: 100px;">
-                                    <div class="dropdown">
                                         <button class="dropbtn">Dự án &#8744; </button>
                                         <div class="dropdown-content">
-                                            @{ Html.RenderAction("dsDuAn", "ThamGiaDuAn");}
+                                            @{ Html.RenderAction("ListDuAn", "CongViec");}
                                             <a href="#">Link 3</a>
                                         </div>
                                     </div>
                                 </div>
-
-                                @*@Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })*@
-                                @*@{ Html.RenderAction("dsNhanVien", "DuAn");}*@
 
                                 <div class="input-group input-group-sm" style="width: 250px;">
                                     <input type="text" id="txtSearch" class="form-control float-right" placeholder="Tìm kiếm theo tên dự án">
@@ -122,14 +105,34 @@
                             <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Nhân viên</th>
-                                    <th>Dự án</th>
-                                    <th>Ngày tham gia</th>
-                                    <th>Ghi Chú</th>
+                                    <th>Tên công việc</th>
+                                    <th>Tên dự án</th>
+                                    <th>Thời gian đặt ra</th>
+                                    <th>Tiến độ</th>
+                                    <th>Trạng thái</th>
                                     <th>Chức năng</th>
                                 </tr>
                             </thead>
-                            <tbody id="dsThamGia">
+                            <tbody id="dsCongViec">
+                                @*@{ int i = 1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@i</td>
+                                            <td>@Html.DisplayFor(modelItem => item.TenDuAn)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ThoiGianDuKien) (tháng)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.KinhPhi)</td>
+                                            <td><img style="width: 100px" src="~/Content/images/projects/@item.Thumbnail" /></td>
+                                            <td>@Html.DisplayFor(modelItem => item.NgayKhoiCong)</td>
+                                            <td>
+
+                                                @Html.ActionLink("Edit", "Edit", new { id = item.MaDuAn }, new { @class = "btn btn-primary btn-sm" })
+                                                @Html.ActionLink("Delete", "Delete", new { id = item.MaDuAn }, new { @class = "btn btn-danger btn-sm" })
+
+                                            </td>
+                                        </tr>
+                                        i++;
+                                    }*@
                             </tbody>
                         </table>
                     </div>
@@ -141,7 +144,6 @@
     </div>
 </section>
 
-
 @section scripts{
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
     <script src="~/Content/Admin/plugins/jquery/jquery.min.js"></script>
@@ -149,85 +151,59 @@
     <script>
         var tuKhoa = '';
         $(document).ready(function () {
-            loadDsThamGia(tuKhoa);
-            window.loadByNv = loadByNv;
-            window.loadByDa = loadByDa;
+
+            loadDsDuAn(tuKhoa);
+            /*window.loadByDa = loadByDa;*/
         });
         $("#btnSearch").click(function () {
-            $('#dsThamGia').empty();
+            $('#dsCongViec').empty();
             tuKhoa = $("#txtSearch").val();
             removeVietnameseTones(tuKhoa);
             console.log(tuKhoa);
             alert(1);
-            loadDsThamGia(tuKhoa);
+            loadDsDuAn(tuKhoa);
 
 
         });
 
+       
 
-        function loadDsThamGia(search) {
+
+        function loadDsDuAn(search) {
             $.ajax({
-                url: '/Admin/ThamGiaDuAn/DsThamGia',
+                url: '/Admin/CongViec/ListCongViec',
                 type: 'get',
                 data: {
                     tuKhoa: search
                 },
                 success: function (data) {
-                    console.log(data)
                     if (data.code == 200) {
                         var i = 1;
-                        $.each(data.dsThamGia, function (k, v) {
+                        $.each(data.dsDuAn, function (k, v) {
                             let tr = '<tr>'
                             tr += '<td>' + i + '</td>';
-                            tr += '<td>' + v.TenDuAN + '</td>';
-                            tr += '<td>' + v.TenNhanVien + '</td>';
-                            tr += '<td>' + v.NgayThamGia + '</td>';
-                            tr += '<td>' + v.GhiChu + '</td>';
-                            tr += '<td>' + v.MaDuAn + '</td>';
+                            tr += '<td>' + v.TenCongViec + '</td>';
+                            tr += '<td>' + v.TenDuAn + '</td>';
+                            tr += '<td>' + v.Deadline + '</td>';
+                            
+                            tr += '<td>' + v.TienDo + '%</td>';
+                            tr += '<td>' + v.TrangThai + '</td>';
                             tr += '<td>';
-                            tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Edit?mada=' + v.MaDuAn + '&manv=' + v.MaNhanVien + '">' + 'Edit</a>';
-                            tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Delete/' + v.MaDuAn + '/' + v.MaNhanVien + '">' + 'Delete</a>';
+                            tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/CongViec/Edit/' + v.MaCongViec + '">' + 'Edit</a>';
+                            tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/CongViec/Delete/' + v.MaCongViec + '">' + 'Delete</a>';
+
+                            tr += '<a class="btn btn-info btn-sm" id = "" href="/Admin/CongViec/Details/' + v.MaCongViec + '">' + 'Detail</a>';
                             tr += '</td>';
                             i++;
-                            $('#dsThamGia').append(tr);
+                            $('#dsCongViec').append(tr);
 
-                        });
-                    }
-                }
-            });
-        }
-
-        $('#MaNV').click(function () {
-            var selectedOption = $(this).children("option:selected").val();
-            console.log("Option được chọn: " + selectedOption);
-            // Thực hiện các tác vụ khác tại đây
-        });
-
-        function loadByNv(maNv) {
-            $('#dsThamGia').empty();
-            $.ajax({
-                url: '/Admin/ThamGiaDuAn/dsDuAnByNV',
-                type: 'get',
-                data: {
-                    id: maNv
-                },
-                success: function (data) {
-                    if (data.code == 200) {
-                        var i = 1;
-                        $.each(data.dsThamGia, function (k, v) {
-                            let tr = '<tr>'
-                            tr += '<td>' + i + '</td>';
-                            tr += '<td>' + v.TenDuAN + '</td>';
-                            tr += '<td>' + v.TenNhanVien + '</td>';
-                            tr += '<td>' + v.NgayThamGia + '</td>';
-                            tr += '<td>' + v.GhiChu + '</td>';
-                            tr += '<td>' + v.MaDuAn + '</td>';
-                            tr += '<td>';
-                            tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Edit?mada=' + v.MaDuAn + '&manv=' + v.MaNhanVien + '">' + 'Edit</a>';
-                            tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Delete/' + v.MaDuAn + '/' + v.MaNhanVien + '">' + 'Delete</a>';
-                            tr += '</td>';
-                            i++;
-                            $('#dsThamGia').append(tr);
+                             //<th>STT</th>
+                             //       <th>Tên công việc</th>
+                             //       <th>Tên dự án</th>
+                             //       <th>Thời gian đặt ra</th>
+                             //       <th>Tiến độ</th>
+                             //       <th>Trạng thái</th>
+                             //       <th>Chức năng</th>
 
                         });
                     }
@@ -236,9 +212,9 @@
         }
 
         function loadByDa(maDa) {
-            $('#dsThamGia').empty();
+            $('#dsCongViec').empty();
             $.ajax({
-                url: '/Admin/ThamGiaDuAn/dsNhanVienByDuAn',
+                url: '/Admin/CongViec/dsCongViecByDuAn',
                 type: 'get',
                 data: {
                     id: maDa
@@ -246,26 +222,31 @@
                 success: function (data) {
                     if (data.code == 200) {
                         var i = 1;
-                        $.each(data.dsThamGia, function (k, v) {
+                        $.each(data.listCongViec, function (k, v) {
                             let tr = '<tr>'
                             tr += '<td>' + i + '</td>';
-                            tr += '<td>' + v.TenDuAN + '</td>';
-                            tr += '<td>' + v.TenNhanVien + '</td>';
-                            tr += '<td>' + v.NgayThamGia + '</td>';
-                            tr += '<td>' + v.GhiChu + '</td>';
-                            tr += '<td>' + v.MaDuAn + '</td>';
+                            tr += '<td>' + v.TenCongViec + '</td>';
+                            tr += '<td>' + v.TenDuAn + '</td>';
+                            tr += '<td>' + v.Deadline + '</td>';
+
+                            tr += '<td>' + v.TienDo + '%</td>';
+                            tr += '<td>' + v.TrangThai + '</td>';
                             tr += '<td>';
-                            tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Edit?mada=' + v.MaDuAn + '&manv=' + v.MaNhanVien + '">' + 'Edit</a>';
-                            tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/ThamGiaDuAn/Delete/' + v.MaDuAn + '/' + v.MaNhanVien + '">' + 'Delete</a>';
+                            tr += '<a class="btn btn-primary btn-sm mr-3" id = "" href="/Admin/CongViec/Edit/' + v.MaCongViec + '">' + 'Edit</a>';
+                            tr += '<a class="btn btn-danger btn-sm mr-3" id = "" href="/Admin/CongViec/Delete/' + v.MaCongViec + '">' + 'Delete</a>';
+
+                            tr += '<a class="btn btn-info btn-sm" id = "" href="/Admin/CongViec/Details/' + v.MaCongViec + '">' + 'Detail</a>';
                             tr += '</td>';
                             i++;
-                            $('#dsThamGia').append(tr);
-
+                            $('#dsCongViec').append(tr);
                         });
                     }
                 }
             });
         }
+
+
+
 
         function removeVietnameseTones(str) {
             str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -296,7 +277,7 @@
             return str;
         }
 
-
     </script>
 
 }
+

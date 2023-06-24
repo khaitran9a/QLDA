@@ -12,31 +12,25 @@ namespace QLDA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_NhanVien
+    public partial class tbl_CongViec
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_NhanVien()
+        public tbl_CongViec()
         {
-            this.tbl_ThamGiaDuAn = new HashSet<tbl_ThamGiaDuAn>();
             this.tbl_NhanVienThamGiaCongViec = new HashSet<tbl_NhanVienThamGiaCongViec>();
         }
     
-        public int MaNV { get; set; }
-        public string Ho { get; set; }
-        public string Ten { get; set; }
-        public string TenDangNhap { get; set; }
-        public string MatKhau { get; set; }
-        public string DiaChi { get; set; }
-        public string SoDienThoai { get; set; }
-        public Nullable<bool> Status { get; set; }
-        public Nullable<int> MaChucVu { get; set; }
-        public string Email { get; set; }
-        public Nullable<System.DateTime> NgaySinh { get; set; }
-        public string AnhDaiDien { get; set; }
+        public int MaCongViec { get; set; }
+        public Nullable<int> MaDuAn { get; set; }
+        public string MucTieu { get; set; }
+        public Nullable<double> ThoiGianHoanThanh { get; set; }
+        public string ChiThietCongViec { get; set; }
+        public Nullable<double> TienDo { get; set; }
+        public Nullable<System.DateTime> NgayTao { get; set; }
+        public Nullable<bool> TrangThai { get; set; }
+        public Nullable<int> ParentID { get; set; }
     
-        public virtual tbl_ChucVu tbl_ChucVu { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_ThamGiaDuAn> tbl_ThamGiaDuAn { get; set; }
+        public virtual tbl_DuAn tbl_DuAn { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_NhanVienThamGiaCongViec> tbl_NhanVienThamGiaCongViec { get; set; }
     }

@@ -12,15 +12,15 @@ namespace QLDA.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_ThamGiaDuAn
+    public partial class tbl_NhanVienThamGiaCongViec
     {
+        public int MaCongViec { get; set; }
         public int MaNV { get; set; }
-        public int MaDuAn { get; set; }
-        public Nullable<System.DateTime> NgayThamGia { get; set; }
-        public string GhiChu { get; set; }
+        public Nullable<System.DateTime> NgayThem { get; set; }
+        public Nullable<bool> TrangThai { get; set; }
         public Nullable<bool> isManager { get; set; }
     
-        public virtual tbl_DuAn tbl_DuAn { get; set; }
+        public virtual tbl_CongViec tbl_CongViec { get; set; }
         public virtual tbl_NhanVien tbl_NhanVien { get; set; }
     }
 }

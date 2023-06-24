@@ -1,0 +1,13 @@
+﻿
+@model IEnumerable<QLDA.Models.tbl_DuAn>
+
+@foreach (var item in Model)
+{
+
+    @*<option class="form-control" value="@item.MaDuAn">@item.TenDuAn </option>*@
+
+    <button type="submit" class="btn btn-default d-block col-12" id="sapXepTheoKinhPhi" onclick="loadByDa(@item.MaDuAn)">@item.TenDuAn  </button>
+
+
+
+}

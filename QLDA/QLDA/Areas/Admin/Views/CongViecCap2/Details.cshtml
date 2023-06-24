@@ -1,0 +1,35 @@
+﻿@model QLDA.Models.tbl_CongViec2
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbl_CongViec2</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenCongViec2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenCongViec2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_CongViec.MucTieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_CongViec.MucTieu)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaCongViec2 }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

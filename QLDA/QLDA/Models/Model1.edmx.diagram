@@ -15,6 +15,11 @@
         <AssociationConnector Association="QLDAModel.FK_tbl_GhiChuDuAn_tbl_DuAn" ManuallyRouted="false" />
         <AssociationConnector Association="QLDAModel.FK_tbl_ThamGiaDuAn_tbl_DuAn" ManuallyRouted="false" />
         <AssociationConnector Association="QLDAModel.FK_tbl_ThamGiaDuAn_tbl_NhanVien" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_CongViec" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="QLDAModel.tbl_NhanVienThamGiaCongViec" Width="1.5" PointX="5.25" PointY="8.5" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_CongViec_tbl_DuAn" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec" />
+        <AssociationConnector Association="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

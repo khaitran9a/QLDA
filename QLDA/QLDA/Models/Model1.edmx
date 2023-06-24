@@ -23,6 +23,20 @@
           <Property Name="TenChucVu" Type="nvarchar" MaxLength="50" />
           <Property Name="GhiChu" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="tbl_CongViec">
+          <Key>
+            <PropertyRef Name="MaCongViec" />
+          </Key>
+          <Property Name="MaCongViec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDuAn" Type="int" />
+          <Property Name="MucTieu" Type="nvarchar(max)" />
+          <Property Name="ThoiGianHoanThanh" Type="float" />
+          <Property Name="ChiThietCongViec" Type="nvarchar(max)" />
+          <Property Name="TienDo" Type="float" />
+          <Property Name="NgayTao" Type="datetime" />
+          <Property Name="TrangThai" Type="bit" />
+          <Property Name="ParentID" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_DuAn">
           <Key>
             <PropertyRef Name="MaDuAn" />
@@ -61,6 +75,17 @@
           <Property Name="NgaySinh" Type="date" />
           <Property Name="AnhDaiDien" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="tbl_NhanVienThamGiaCongViec">
+          <Key>
+            <PropertyRef Name="MaCongViec" />
+            <PropertyRef Name="MaNV" />
+          </Key>
+          <Property Name="MaCongViec" Type="int" Nullable="false" />
+          <Property Name="MaNV" Type="int" Nullable="false" />
+          <Property Name="NgayThem" Type="date" />
+          <Property Name="TrangThai" Type="bit" />
+          <Property Name="isManager" Type="bit" />
+        </EntityType>
         <EntityType Name="tbl_ThamGiaDuAn">
           <Key>
             <PropertyRef Name="MaNV" />
@@ -70,7 +95,20 @@
           <Property Name="MaDuAn" Type="int" Nullable="false" />
           <Property Name="NgayThamGia" Type="date" />
           <Property Name="GhiChu" Type="nvarchar(max)" />
+          <Property Name="isManager" Type="bit" />
         </EntityType>
+        <Association Name="FK_tbl_CongViec_tbl_DuAn">
+          <End Role="tbl_DuAn" Type="Self.tbl_DuAn" Multiplicity="0..1" />
+          <End Role="tbl_CongViec" Type="Self.tbl_CongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_DuAn">
+              <PropertyRef Name="MaDuAn" />
+            </Principal>
+            <Dependent Role="tbl_CongViec">
+              <PropertyRef Name="MaDuAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_GhiChuDuAn_tbl_DuAn">
           <End Role="tbl_DuAn" Type="Self.tbl_DuAn" Multiplicity="0..1" />
           <End Role="tbl_GhiChuDuAn" Type="Self.tbl_GhiChuDuAn" Multiplicity="*" />
@@ -92,6 +130,30 @@
             </Principal>
             <Dependent Role="tbl_NhanVien">
               <PropertyRef Name="MaChucVu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec">
+          <End Role="tbl_CongViec" Type="Self.tbl_CongViec" Multiplicity="1" />
+          <End Role="tbl_NhanVienThamGiaCongViec" Type="Self.tbl_NhanVienThamGiaCongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_CongViec">
+              <PropertyRef Name="MaCongViec" />
+            </Principal>
+            <Dependent Role="tbl_NhanVienThamGiaCongViec">
+              <PropertyRef Name="MaCongViec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien">
+          <End Role="tbl_NhanVien" Type="Self.tbl_NhanVien" Multiplicity="1" />
+          <End Role="tbl_NhanVienThamGiaCongViec" Type="Self.tbl_NhanVienThamGiaCongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_NhanVien">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="tbl_NhanVienThamGiaCongViec">
+              <PropertyRef Name="MaNV" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -122,10 +184,16 @@
         <EntityContainer Name="QLDAModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ChucVu" EntityType="Self.tbl_ChucVu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_CongViec" EntityType="Self.tbl_CongViec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_DuAn" EntityType="Self.tbl_DuAn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GhiChuDuAn" EntityType="Self.tbl_GhiChuDuAn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_NhanVien" EntityType="Self.tbl_NhanVien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NhanVienThamGiaCongViec" EntityType="Self.tbl_NhanVienThamGiaCongViec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ThamGiaDuAn" EntityType="Self.tbl_ThamGiaDuAn" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_CongViec_tbl_DuAn" Association="Self.FK_tbl_CongViec_tbl_DuAn">
+            <End Role="tbl_DuAn" EntitySet="tbl_DuAn" />
+            <End Role="tbl_CongViec" EntitySet="tbl_CongViec" />
+          </AssociationSet>
           <AssociationSet Name="FK_tbl_GhiChuDuAn_tbl_DuAn" Association="Self.FK_tbl_GhiChuDuAn_tbl_DuAn">
             <End Role="tbl_DuAn" EntitySet="tbl_DuAn" />
             <End Role="tbl_GhiChuDuAn" EntitySet="tbl_GhiChuDuAn" />
@@ -133,6 +201,14 @@
           <AssociationSet Name="FK_tbl_NhanVien_tbl_ChucVu" Association="Self.FK_tbl_NhanVien_tbl_ChucVu">
             <End Role="tbl_ChucVu" EntitySet="tbl_ChucVu" />
             <End Role="tbl_NhanVien" EntitySet="tbl_NhanVien" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec" Association="Self.FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec">
+            <End Role="tbl_CongViec" EntitySet="tbl_CongViec" />
+            <End Role="tbl_NhanVienThamGiaCongViec" EntitySet="tbl_NhanVienThamGiaCongViec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" Association="Self.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien">
+            <End Role="tbl_NhanVien" EntitySet="tbl_NhanVien" />
+            <End Role="tbl_NhanVienThamGiaCongViec" EntitySet="tbl_NhanVienThamGiaCongViec" />
           </AssociationSet>
           <AssociationSet Name="FK_tbl_ThamGiaDuAn_tbl_DuAn" Association="Self.FK_tbl_ThamGiaDuAn_tbl_DuAn">
             <End Role="tbl_DuAn" EntitySet="tbl_DuAn" />
@@ -179,6 +255,7 @@
           <NavigationProperty Name="tbl_GhiChuDuAn" Relationship="Self.FK_tbl_GhiChuDuAn_tbl_DuAn" FromRole="tbl_DuAn" ToRole="tbl_GhiChuDuAn" />
           <NavigationProperty Name="tbl_ThamGiaDuAn" Relationship="Self.FK_tbl_ThamGiaDuAn_tbl_DuAn" FromRole="tbl_DuAn" ToRole="tbl_ThamGiaDuAn" />
           <Property Name="TrangThaiDuAn" Type="Boolean" />
+          <NavigationProperty Name="tbl_CongViec" Relationship="QLDAModel.FK_tbl_CongViec_tbl_DuAn" FromRole="tbl_DuAn" ToRole="tbl_CongViec" />
         </EntityType>
         <EntityType Name="tbl_GhiChuDuAn">
           <Key>
@@ -208,6 +285,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="AnhDaiDien" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_NhanVienThamGiaCongViec" Relationship="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" FromRole="tbl_NhanVien" ToRole="tbl_NhanVienThamGiaCongViec" />
         </EntityType>
         <EntityType Name="tbl_ThamGiaDuAn">
           <Key>
@@ -220,6 +298,7 @@
           <Property Name="GhiChu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tbl_DuAn" Relationship="Self.FK_tbl_ThamGiaDuAn_tbl_DuAn" FromRole="tbl_ThamGiaDuAn" ToRole="tbl_DuAn" />
           <NavigationProperty Name="tbl_NhanVien" Relationship="Self.FK_tbl_ThamGiaDuAn_tbl_NhanVien" FromRole="tbl_ThamGiaDuAn" ToRole="tbl_NhanVien" />
+          <Property Name="isManager" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tbl_NhanVien_tbl_ChucVu">
           <End Role="tbl_ChucVu" Type="Self.tbl_ChucVu" Multiplicity="0..1" />
@@ -292,7 +371,86 @@
             <End Role="tbl_NhanVien" EntitySet="tbl_NhanVien" />
             <End Role="tbl_ThamGiaDuAn" EntitySet="tbl_ThamGiaDuAn" />
           </AssociationSet>
+          <EntitySet Name="tbl_CongViec" EntityType="QLDAModel.tbl_CongViec" />
+          <EntitySet Name="tbl_NhanVienThamGiaCongViec" EntityType="QLDAModel.tbl_NhanVienThamGiaCongViec" />
+          <AssociationSet Name="FK_tbl_CongViec_tbl_DuAn" Association="QLDAModel.FK_tbl_CongViec_tbl_DuAn">
+            <End Role="tbl_DuAn" EntitySet="tbl_DuAn" />
+            <End Role="tbl_CongViec" EntitySet="tbl_CongViec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec" Association="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec">
+            <End Role="tbl_CongViec" EntitySet="tbl_CongViec" />
+            <End Role="tbl_NhanVienThamGiaCongViec" EntitySet="tbl_NhanVienThamGiaCongViec" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" Association="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien">
+            <End Role="tbl_NhanVien" EntitySet="tbl_NhanVien" />
+            <End Role="tbl_NhanVienThamGiaCongViec" EntitySet="tbl_NhanVienThamGiaCongViec" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tbl_CongViec">
+          <Key>
+            <PropertyRef Name="MaCongViec" />
+          </Key>
+          <Property Name="MaCongViec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaDuAn" Type="Int32" />
+          <Property Name="MucTieu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ThoiGianHoanThanh" Type="Double" />
+          <Property Name="ChiThietCongViec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TienDo" Type="Double" />
+          <Property Name="NgayTao" Type="DateTime" Precision="3" />
+          <Property Name="TrangThai" Type="Boolean" />
+          <NavigationProperty Name="tbl_DuAn" Relationship="QLDAModel.FK_tbl_CongViec_tbl_DuAn" FromRole="tbl_CongViec" ToRole="tbl_DuAn" />
+          <NavigationProperty Name="tbl_NhanVienThamGiaCongViec" Relationship="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec" FromRole="tbl_CongViec" ToRole="tbl_NhanVienThamGiaCongViec" />
+          <Property Name="ParentID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_NhanVienThamGiaCongViec">
+          <Key>
+            <PropertyRef Name="MaCongViec" />
+            <PropertyRef Name="MaNV" />
+          </Key>
+          <Property Name="MaCongViec" Type="Int32" Nullable="false" />
+          <Property Name="MaNV" Type="Int32" Nullable="false" />
+          <Property Name="NgayThem" Type="DateTime" Precision="0" />
+          <Property Name="TrangThai" Type="Boolean" />
+          <NavigationProperty Name="tbl_CongViec" Relationship="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec" FromRole="tbl_NhanVienThamGiaCongViec" ToRole="tbl_CongViec" />
+          <NavigationProperty Name="tbl_NhanVien" Relationship="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" FromRole="tbl_NhanVienThamGiaCongViec" ToRole="tbl_NhanVien" />
+          <Property Name="isManager" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_tbl_CongViec_tbl_DuAn">
+          <End Type="QLDAModel.tbl_DuAn" Role="tbl_DuAn" Multiplicity="0..1" />
+          <End Type="QLDAModel.tbl_CongViec" Role="tbl_CongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_DuAn">
+              <PropertyRef Name="MaDuAn" />
+            </Principal>
+            <Dependent Role="tbl_CongViec">
+              <PropertyRef Name="MaDuAn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_NhanVienThamGiaCongViec_tbl_CongViec">
+          <End Type="QLDAModel.tbl_CongViec" Role="tbl_CongViec" Multiplicity="1" />
+          <End Type="QLDAModel.tbl_NhanVienThamGiaCongViec" Role="tbl_NhanVienThamGiaCongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_CongViec">
+              <PropertyRef Name="MaCongViec" />
+            </Principal>
+            <Dependent Role="tbl_NhanVienThamGiaCongViec">
+              <PropertyRef Name="MaCongViec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien">
+          <End Type="QLDAModel.tbl_NhanVien" Role="tbl_NhanVien" Multiplicity="1" />
+          <End Type="QLDAModel.tbl_NhanVienThamGiaCongViec" Role="tbl_NhanVienThamGiaCongViec" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_NhanVien">
+              <PropertyRef Name="MaNV" />
+            </Principal>
+            <Dependent Role="tbl_NhanVienThamGiaCongViec">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -363,6 +521,7 @@
           <EntitySetMapping Name="tbl_ThamGiaDuAn">
             <EntityTypeMapping TypeName="QLDAModel.tbl_ThamGiaDuAn">
               <MappingFragment StoreEntitySet="tbl_ThamGiaDuAn">
+                <ScalarProperty Name="isManager" ColumnName="isManager" />
                 <ScalarProperty Name="MaNV" ColumnName="MaNV" />
                 <ScalarProperty Name="MaDuAn" ColumnName="MaDuAn" />
                 <ScalarProperty Name="NgayThamGia" ColumnName="NgayThamGia" />
@@ -370,7 +529,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="tbl_CongViec">
+            <EntityTypeMapping TypeName="QLDAModel.tbl_CongViec">
+              <MappingFragment StoreEntitySet="tbl_CongViec">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+                <ScalarProperty Name="TienDo" ColumnName="TienDo" />
+                <ScalarProperty Name="ChiThietCongViec" ColumnName="ChiThietCongViec" />
+                <ScalarProperty Name="ThoiGianHoanThanh" ColumnName="ThoiGianHoanThanh" />
+                <ScalarProperty Name="MucTieu" ColumnName="MucTieu" />
+                <ScalarProperty Name="MaDuAn" ColumnName="MaDuAn" />
+                <ScalarProperty Name="MaCongViec" ColumnName="MaCongViec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_NhanVienThamGiaCongViec">
+            <EntityTypeMapping TypeName="QLDAModel.tbl_NhanVienThamGiaCongViec">
+              <MappingFragment StoreEntitySet="tbl_NhanVienThamGiaCongViec">
+                <ScalarProperty Name="isManager" ColumnName="isManager" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="NgayThem" ColumnName="NgayThem" />
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="MaCongViec" ColumnName="MaCongViec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

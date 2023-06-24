@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QLDA.Models.tbl_NhanVien>
+
+@{ int i = 1;}
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@i</td>
+        <td class="">@item.Ho @item.Ten </td>
+        @* <td>@Html.DisplayFor(modelItem => item.Ho) @Html.DisplayFor(modelItem => item.Ten, new { htmlAttributes = new { id = "idnv" } })</td>*@
+    <td>
+        <input type="button" class="btn btn-danger btn-sm" id="childButton"  value="Xóa nhân viên " data-toggle="modal" data-target="#nhanVienModal" />
+        <!-- Modal -->
+        <div class="modal fade" id="nhanVienModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Có không giữ, mất thì thôi!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="deleteNhanVien(@item.MaNV)" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </td>
+       
+       
+
+    </tr>
+    i++;
+}
+
