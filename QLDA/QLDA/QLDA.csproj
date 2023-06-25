@@ -2315,14 +2315,9 @@
     <Content Include="Areas\Admin\Views\CongViec\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CongViec\_listDuAn.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\CongViecCap2\_dsCongViecCap2.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\_dsNhanVien.cshtml" />
     <Content Include="Areas\Admin\Views\NhanVienThamGiaCongViec\_dsDuAn.cshtml" />
+    <Content Include="Areas\Admin\Views\CongViec\_dsCongViecCap2.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

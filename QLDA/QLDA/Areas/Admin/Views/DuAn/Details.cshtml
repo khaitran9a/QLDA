@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Jobs = Model.tbl_CongViec;
 }
 
 <div class="content-header">
@@ -342,16 +343,16 @@
             });
         }
 
-       
+
 
         function suaCongViec(maCongViec) {
 
             _chiTiet = $("#chiTietEdit-" + maCongViec).val();
             _mucTieu = $("#mucTieuEdit-" + maCongViec).val();
             _tg = $("#thoiGianHoanThanhEdit-" + maCongViec).val();
-            
-           
-            
+
+
+
             error1 = $("#error1");
             if ($("#mucTieuEdit").val() == "") {
                 error1.html("Vui lòng nhập mục tiêu công việc!");
@@ -373,12 +374,12 @@
                 return;
             }
          
+
             $.ajax({
+                url: "/Admin/CongViec/editCongViec",
                 type: "POST",
-                url: "/CongViec/editCongViec",
                 data: { MaCongViec: maCongViec, mucTieu: _mucTieu, chiTiet: _chiTiet, tg: _tg },
-                success: function (data) {
-                    
+                success: function(data) {
                     if (data.message) {
                         alert("Cập nhật công việc thành công");
                         location.reload();
@@ -390,13 +391,14 @@
             });
         }
 
-        function xoaCongViec(idCongViec) {
-            ;
+        function xoaCongViec(MaCongViec) {
+            alert(1);
             $.ajax({
                 type: "POST",
-                url: "/CongViec/deleteCongViec",
-                data: { maCongViec: idCongViec },
+                url: "/Admin/CongViec/deleteCongViec",
+                data: { maCongViec: MaCongViec },
                 success: function (data) {
+                    alert(1);
                     if (data.message) {
                         /*alert("Xóa thành công");*/
                         location.reload();
