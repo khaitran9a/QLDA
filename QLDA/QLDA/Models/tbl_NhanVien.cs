@@ -33,6 +33,7 @@ namespace QLDA.Models
         public string Email { get; set; }
         public Nullable<System.DateTime> NgaySinh { get; set; }
         public string AnhDaiDien { get; set; }
+        public Nullable<bool> isAdmin { get; set; }
     
         public virtual tbl_ChucVu tbl_ChucVu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

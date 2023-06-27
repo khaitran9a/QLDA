@@ -134,6 +134,9 @@ namespace QLDA.Areas.Admin.Controllers
 
 
 
+
+
+
         //// GET: Admin/ThamGiaDuAn/Details/5
         //public ActionResult Details(int? id)
         //{
@@ -234,6 +237,45 @@ namespace QLDA.Areas.Admin.Controllers
                 return Json(new { message = false });
             }
         }
+
+
+        [HttpPost]
+        public ActionResult setManager(int maNV, int maDa)
+        {
+            if (maNV == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                tbl_ThamGiaDuAn tg = (from c in db.tbl_ThamGiaDuAn
+                                                  where c.MaNV == maNV && c.MaDuAn == maDa
+                                                  select c).FirstOrDefault();
+                tg.isManager = true;
+                db.Entry(tg).State = EntityState.Modified;
+                db.SaveChanges();
+
+                List<tbl_ThamGiaDuAn> nvConlai = db.tbl_ThamGiaDuAn.Where(x => x.MaNV != maNV && x.MaDuAn == maDa).ToList();
+                int dem = nvConlai.Count();
+                foreach (var item in nvConlai)
+                {
+                    item.isManager = false;
+                    db.Entry(item).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                db.SaveChanges();
+                return Json(new { message = true });
+
+            }
+            catch
+            {
+                return Json(new { message = false });
+            }
+        }
+
+
+
 
 
         //[HttpPost]

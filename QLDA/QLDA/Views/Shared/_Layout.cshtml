@@ -7,13 +7,13 @@
     <title>Web quản lý dự án</title>
 
     <!-- Google Font: Source Sans Pro -->
- 
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="~/Content/Admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="~/Content/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
- 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 
@@ -21,8 +21,8 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <div class="navbar m-auto navbar-inverse navbar-fixed-top" style="max-height: 50px; box-sizing:content-box">
+        <div class="container d-flex" style="align-items:center; justify-content: space-between; max-height: 50px; transform: translateY(-10px)">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
                     <span class="icon-bar"></span>
@@ -31,60 +31,65 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-                    @if (Session["TenDangNhap"] != null)
-                    {
-                        <li style=" z-index: 1000; margin-top: 12px;" class="header__navbar-item header__navbar-user">
-                            <img src="~/Content/images/avatars/@Session["Avatar"]" class="header__navbar-user-img" />
-
-                            <ul class="header__navbar-user-menu" style="width: 180px">
-                                <li class="header__navbar-user-item">
-                                    <a href="#">@Session["FullName"]</a>
-                                </li>
-                                <li class="header__navbar-user-item">
-                                    @Html.ActionLink("Tài khoản của tôi", "Profile", "SignUp", new { id = Session["UserID"] }, new { @class = "" })
-                                </li>
-                                <li class="header__navbar-user-item">
-                                    @Html.ActionLink("Chỉnh sửa tài khoản", "Change", "NhanVien")
-                                </li>
-
-                                <li class="header__navbar-user-item">
-                                    @Html.ActionLink("Đổi mật khẩu", "Password", "NhanVien")
-                                </li>
 
 
-                                <li class="header__navbar-user-item">
-                                    @*@Html.ActionLink("Đi tới trang quản trị", "Index", "Admin")*@
-                                    <a href="/Admin/Home">Đi tới trang quản trị</a>
-                                </li>
+            <nav class="navbar navbar-expand-lg" style=" transform: translateY(10px)">
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav d-flex justify-content-between text-center">
+                        <li class="mr-5">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="mr-5">@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li class="mr-5">@Html.ActionLink("About", "About", "Home")</li>
+                        <li class="mr-5">@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        @if (Session["TenDangNhap"] != null)
+                        {
+                            <li style=" z-index: 1000; margin-top: 12px;" class="header__navbar-item header__navbar-user">
+                                <img src="~/Content/images/avatars/@Session["Avatar"]" class="header__navbar-user-img" />
+
+                                <ul class="header__navbar-user-menu" style="width: 180px">
+                                    <li class="header__navbar-user-item">
+                                        <a href="#">@Session["FullName"]</a>
+                                    </li>
+                                    <li class="header__navbar-user-item">
+                                        @Html.ActionLink("Tài khoản của tôi", "Profile", "SignUp", new { id = Session["UserID"] }, new { @class = "" })
+                                    </li>
+                                    <li class="header__navbar-user-item">
+                                        @Html.ActionLink("Chỉnh sửa tài khoản", "Change", "NhanVien")
+                                    </li>
+
+                                    <li class="header__navbar-user-item">
+                                        @Html.ActionLink("Đổi mật khẩu", "Password", "NhanVien")
+                                    </li>
+
+                                    @if (Session["Admin"] == "Admin")
+                                    {
+                                        <li class="header__navbar-user-item">
+                                            @*@Html.ActionLink("Đi tới trang quản trị", "Index", "Admin")*@
+                                            <a href="/Admin/Home">Đi tới trang quản trị</a>
+                                        </li>
+                                    }
 
 
-                                <li class="header__navbar-user-item header__navbar-user-item--separate">
-                                    @Html.ActionLink("Đăng xuất", "LogOut", "NhanVien", null, new { @class = "" })
-                                </li>
+                                    <li class="header__navbar-user-item header__navbar-user-item--separate">
+                                        @Html.ActionLink("Đăng xuất", "LogOut", "NhanVien", null, new { @class = "" })
+                                    </li>
 
 
-                                @*@if (@Session["Admin"] == "Admin")
-        {
-            <li class="header__navbar-user-item">
-                @Html.ActionLink("Admin", "Index", "Home", new { area = "Admin" }, new { @class = "", target = "_blank" })
-            </li>
-        }*@
-                            </ul>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Login", "DangNhap", "NhanVien")</li>
-                    }
 
-                </ul>
-            </div>
+
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Login", "DangNhap", "NhanVien")</li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+
+
+
         </div>
     </div>
     <div class="container body-content">
@@ -124,13 +129,13 @@
     @*<script src="~/Content/Admin/dist/js/demo.js"></script>*@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="~/Content/Admin/dist/js/pages/dashboard.js"></script>
-    @Scripts.Render("~/Content/Admin/plugins/jquery/jquery.min.js")
-    @Scripts.Render("~/Content/Admin/plugins/jquery-ui/jquery-ui.min.js")
-    @Scripts.Render("~/Content/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js")
 
 
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/Content/Admin/plugins/jquery/jquery.min.js")
+    @Scripts.Render("~/Content/Admin/plugins/jquery-ui/jquery-ui.min.js")
+    @Scripts.Render("~/Content/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js")
     @RenderSection("scripts", required: false)
 </body>
 

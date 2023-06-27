@@ -11,6 +11,10 @@ namespace QLDA.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
+            if (Session["Admin"] == null)
+            {
+                return HttpNotFound();
+            }
             return View();
         }
     }

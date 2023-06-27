@@ -1,0 +1,89 @@
+﻿@model QLDA.Models.tbl_CongViec
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tbl_CongViec</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MucTieu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MucTieu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThoiGianHoanThanh)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ThoiGianHoanThanh)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChiThietCongViec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChiThietCongViec)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TienDo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TienDo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NgayTao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NgayTao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_DuAn.TenDuAn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_DuAn.TenDuAn)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

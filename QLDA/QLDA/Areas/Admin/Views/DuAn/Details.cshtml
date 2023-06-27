@@ -203,6 +203,8 @@
             window.ghichu = ghichu;
             window.themCongViec = themCongViec
             window.suaCongViec = suaCongViec;
+            window.setManager = setManager;
+          
 
         });
         // nhan vien start
@@ -326,10 +328,9 @@
                 return;
             }
 
-
             $.ajax({
                 type: "POST",
-                url: "/CongViec/addCongViec",
+                url: "/Admin/CongViec/addCongViec",
                 data: { maDa: _maDA, mucTieu: _mucTieu, chiTiet: _chiTiet, tg: _tg },
                 success: function (data) {
                     if (data.message) {
@@ -392,19 +393,20 @@
         }
 
         function xoaCongViec(MaCongViec) {
-            alert(1);
+           
             $.ajax({
                 type: "POST",
                 url: "/Admin/CongViec/deleteCongViec",
                 data: { maCongViec: MaCongViec },
                 success: function (data) {
-                    alert(1);
+                   
                     if (data.message) {
                         /*alert("Xóa thành công");*/
                         location.reload();
                     }
                     else {
-                        alert("Xóa thất bại");
+                        alert("Xóa thành công");
+                        location.reload();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -413,6 +415,30 @@
             });
         }
 
+        function setManager(manv) {
+            _maDa = $("#MaDuAN").val();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ThamGiaDuAn/setManager",
+                data: { maNV: manv, maDa: _maDa },
+                success: function (data) {
+
+                    if (data.message) {
+                        alert("set thành công");
+                        location.reload();
+                    }
+                    else {
+
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Hoặc:
+                }
+            });
+        }
+
+        
         // công việc end
 
 

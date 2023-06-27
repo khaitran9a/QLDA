@@ -74,6 +74,7 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="NgaySinh" Type="date" />
           <Property Name="AnhDaiDien" Type="varchar" MaxLength="200" />
+          <Property Name="isAdmin" Type="bit" />
         </EntityType>
         <EntityType Name="tbl_NhanVienThamGiaCongViec">
           <Key>
@@ -286,6 +287,7 @@
           <Property Name="NgaySinh" Type="DateTime" Precision="0" />
           <Property Name="AnhDaiDien" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_NhanVienThamGiaCongViec" Relationship="QLDAModel.FK_tbl_NhanVienThamGiaCongViec_tbl_NhanVien" FromRole="tbl_NhanVien" ToRole="tbl_NhanVienThamGiaCongViec" />
+          <Property Name="isAdmin" Type="Boolean" />
         </EntityType>
         <EntityType Name="tbl_ThamGiaDuAn">
           <Key>
@@ -503,6 +505,7 @@
           <EntitySetMapping Name="tbl_NhanVien">
             <EntityTypeMapping TypeName="QLDAModel.tbl_NhanVien">
               <MappingFragment StoreEntitySet="tbl_NhanVien">
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
                 <ScalarProperty Name="AnhDaiDien" ColumnName="AnhDaiDien" />
                 <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

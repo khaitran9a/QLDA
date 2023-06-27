@@ -64,7 +64,7 @@ namespace QLDA.Areas.Admin.Controllers
         {
             var query1 = db.tbl_ThamGiaDuAn.Where(y => y.MaDuAn == id)
                           .Select(x => x.MaNV);
-            var items = db.tbl_NhanVien.Where(x => !query1.Contains(x.MaNV));
+            var items = db.tbl_NhanVien.Where(x => !query1.Contains(x.MaNV) && x.isAdmin != true);
             return PartialView("_ListNhanVien", items);
         }
 
@@ -73,6 +73,7 @@ namespace QLDA.Areas.Admin.Controllers
             var query1 = db.tbl_ThamGiaDuAn.Where(y => y.MaDuAn == id)
                           .Select(x => x.MaNV);
             var items = db.tbl_NhanVien.Where(x => query1.Contains(x.MaNV));
+            ViewBag.idDuAn = id;
             return PartialView("_dsNhanVienThamGia", items);
         }
 

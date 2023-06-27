@@ -1,4 +1,6 @@
-﻿@model QLDA.Models.tbl_CongViec
+﻿
+
+@model QLDA.Models.tbl_CongViec
 
 
 
@@ -44,10 +46,10 @@
                     @Html.DisplayFor(model => model.TienDo)
                 </dd>
 
-                <dd >
+                <dd>
                     @Html.HiddenFor(model => model.MaDuAn, new { @id = "MaDuAn" })
                 </dd>
-               
+
 
 
                 <dt>
@@ -82,7 +84,7 @@
         <form class="form-group mt-3" id="add" action="" method="post">
             <select class="col-md-10" id="MaNV" name="MaNV">
                 @*@Html.DropDownList("MaNV", null, htmlAttributes: new { @class = "form-control" })*@
-                @{ Html.RenderAction("dsNhanVienInDuAn", "CongViec");}
+                @{ Html.RenderAction("dsNhanVienInDuAn", "CongViec", new { area = "Admin" });}
 
             </select>
 
@@ -100,14 +102,14 @@
                     </tr>
                 </thead>
                 <tbody id="dvPartial">
-                    @{ Html.RenderAction("dsNhanVienInCongViec", "CongViec");}
+                    @{ Html.RenderAction("dsNhanVienInCongViec", "CongViec", new { area = "Admin" });}
                 </tbody>
             </table>
         </div>
 
         <!--<p class="mt-3 d-flex flex-row-reverse ">
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDuAn }, new { @class = "btn btn-sm btn-info " })
-    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-secondary mr-3" })-->
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MaDuAn }, new { @class = "btn btn-sm btn-info " })
+        @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-sm btn-secondary mr-3" })-->
         @*<a href="/Admin/ThamGiaDuAn/Create/@Model.MaDuAn">Thêm thành viên</a>*@
         <!--</p>-->
 
@@ -193,7 +195,7 @@
                     </tr>
                 </thead>
                 <tbody id="dvPartial">
-                    @{ Html.RenderAction("dsCongViecCap2", "CongViec");}
+                    @{ Html.RenderAction("dsCongViecCap2", "CongViec", new { area = "Admin" });}
                 </tbody>
             </table>
         </div>
@@ -229,8 +231,7 @@
         });
         function setLeader(manv) {
             _maCV = $("#MaCongViec").val();
-            debugger
-            alert(1)
+            //debugger
             $.ajax({
                 type: "POST",
                 url: "/Admin/NhanVienThamGiaCongViec/setLeader",
@@ -307,7 +308,7 @@
             $.ajax({
                 url: "/Admin/CongViec/addCongViecCon",
                 type: "POST",
-                
+
                 data: { maDa: _maDA, maCv: _maCV, tenCv: _tenCongViec, chiTiet: _chiTiet, deadLine: _deadLine },
                 success: function (data) {
                     if (data.message) {
@@ -323,12 +324,12 @@
 
 
         function suaCongViec2(maCongViec2) {
-            
+
             _tenCv = $("#tenCvEdit-" + maCongViec2).val();
             _chiTiet = $("#chiTietEdit-" + maCongViec2).val();
-            
+
             _tg = $("#KhoiLuong-" + maCongViec2).val();
-          
+
 
             $.ajax({
                 type: "POST",
@@ -348,7 +349,7 @@
         }
 
         function xoaCongViec2(idCongViec) {
-            
+
             $.ajax({
                 type: "POST",
                 url: "/CongViecCap2/deleteCongViec2",

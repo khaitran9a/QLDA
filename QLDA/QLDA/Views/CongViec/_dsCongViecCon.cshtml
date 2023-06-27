@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<QLDA.Models.tbl_CongViec>
+
+@{ var i = 1;}
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@i</td>
+        <td class="">@item.MucTieu </td>
+        <td class="">@item.ThoiGianHoanThanh (h)</td>
+        <td class="">@item.TienDo %</td>
+
+        @{ if (item.TrangThai == true)
+            {
+                <td class=""> Đã triển khai </td>
+            }
+            else
+            {
+                <td class=""> Đã hủy </td>
+            }
+        }
+    <td>
+        <a href="/CongViec/ChiTiet/@item.MaCongViec" class="btn btn-sm btn-info">Chi tiết</a>
+
+    </td>
+       
+    </tr>
+    i++;
+}
+
+
+
+

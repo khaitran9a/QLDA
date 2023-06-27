@@ -21,6 +21,35 @@ namespace QLDA.Controllers
         }
 
         // GET: DuAn/Details/5
+
+
+        public ActionResult dsCongViecOfNhanVien(int id)
+        {
+            int userID = Convert.ToInt32(Session["UserID"]);
+            var items = db.tbl_CongViec.Join(db.tbl_NhanVienThamGiaCongViec,
+                        cv => cv.MaCongViec,
+                        nvtc => nvtc.MaCongViec,
+                        (cv, nvtc) => new { CongViec = cv, NhanVienThamGia = nvtc })
+                  .Where(x => x.CongViec.MaDuAn == id
+                              && x.CongViec.TrangThai == true
+                              && x.NhanVienThamGia.MaNV == userID).Select(x => x.CongViec);
+                  
+            return PartialView("_dsCongViecOfNhanVien", items);
+        }
+
+
+
+        public ActionResult dsNhanVienInDuAn(int id)
+        {
+            var query1 = db.tbl_ThamGiaDuAn.Where(y => y.MaDuAn == id)
+                          .Select(x => x.MaNV);
+            var items = db.tbl_NhanVien.Where(x => query1.Contains(x.MaNV));
+            return PartialView("_dsNhanVienInDuAn", items);
+        }
+
+
+
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -32,6 +61,20 @@ namespace QLDA.Controllers
             {
                 return HttpNotFound();
             }
+
+
+            int userID = (int)Session["UserID"];
+
+            var query = db.tbl_ThamGiaDuAn.FirstOrDefault(x => x.MaDuAn == id && x.MaNV == userID && x.isManager == true);
+            //int count = query.Count();
+            
+
+            if (query != null)
+            {
+                tbl_DuAn = db.tbl_DuAn.Find(query.MaDuAn);
+            }
+
+
             return View(tbl_DuAn);
         }
 
@@ -123,5 +166,7 @@ namespace QLDA.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }

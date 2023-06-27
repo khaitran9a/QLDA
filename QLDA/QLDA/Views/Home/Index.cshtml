@@ -39,10 +39,22 @@
             color: #666666;
         }
 </style>
-
-<div class="container-duan " style="padding-top: 50px">
-    <h2 class="mb-2"> Danh sách dự án tham gia</h2>
-    <div class="row-duan">
-        @{ Html.RenderAction("HomeDuAN", "Home");}
+@if (Session["UserID"] != null)
+{
+    <div class="container-duan " style="padding-top: 50px">
+        <h2 class="mb-2"> Danh sách dự án tham gia</h2>
+        <div class="row-duan">
+            @{ Html.RenderAction("HomeDuAN", "Home");}
+        </div>
     </div>
-</div>
+}
+
+else
+{
+    <div class="container-duan " style="padding-top: 50px">
+        <h2 class="mb-2">Mời bạn đăng nhập để sử dụng dịch vụ của chúng tôi!</h2>
+        
+    </div>
+
+}
+

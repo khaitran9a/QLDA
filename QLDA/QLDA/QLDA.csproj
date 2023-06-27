@@ -145,9 +145,11 @@
     <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanVienThamGiaCongViecController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThamGiaDuAnController.cs" />
+    <Compile Include="Controllers\CongViecController.cs" />
     <Compile Include="Controllers\DuAnController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
+    <Compile Include="Controllers\NhanVienThamGiaCongViecController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2352,6 +2354,19 @@
     <Content Include="Views\Home\_HomeDuAn.cshtml" />
     <Content Include="Views\Home\_Home.cshtml" />
     <Content Include="Views\DuAn\Details.cshtml" />
+    <Content Include="Views\DuAn\_dsCongViecOfNhanVien.cshtml" />
+    <Content Include="Views\CongViec\Create.cshtml" />
+    <Content Include="Views\CongViec\Delete.cshtml" />
+    <Content Include="Views\CongViec\Details.cshtml" />
+    <Content Include="Views\CongViec\Edit.cshtml" />
+    <Content Include="Views\CongViec\Index.cshtml" />
+    <Content Include="Views\CongViec\_dsNhanVienTrongCongViec.cshtml" />
+    <Content Include="Views\DuAn\_dsNhanVienInDuAn.cshtml" />
+    <Content Include="Views\NhanVienThamGiaCongViec\_dsNhanVienCongViec.cshtml" />
+    <Content Include="Views\CongViec\_dsCongViecCon.cshtml" />
+    <Content Include="Views\CongViec\_dsCongViec.cshtml" />
+    <Content Include="Views\CongViec\ChiTietCongViec.cshtml" />
+    <Content Include="Views\CongViec\ChiTiet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -69,6 +69,8 @@ namespace QLDA.Controllers
                         NgaySinh = nv.NgaySinh
 
                     };
+                    _nv.Ten = nv.Ten;
+                    _nv.Ho = nv.Ho;
 
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.tbl_NhanVien.Add(_nv);
@@ -131,10 +133,10 @@ namespace QLDA.Controllers
                     Session["Email"] = data.Email;
                     Session["UserID"] = data.MaNV;
                     Session["TenDangNhap"] = data.TenDangNhap;
-                    //if (data.IsAdmin == true)
-                    //{
-                    //    Session["Admin"] = "Admin";
-                    //}
+                    if (data.isAdmin == true)
+                    {
+                        Session["Admin"] = "Admin";
+                    }
                     Session["ChucVu"] = data.MaChucVu;
                     Session["Avatar"] = data.AnhDaiDien;
                     return RedirectToAction("Index", "Home");

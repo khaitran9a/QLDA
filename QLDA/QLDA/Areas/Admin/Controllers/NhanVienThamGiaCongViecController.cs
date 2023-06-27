@@ -99,7 +99,7 @@ namespace QLDA.Areas.Admin.Controllers
         }
 
 
-        [HttpPost, ActionName("deleteNhanVien")]
+        //[HttpPost, ActionName("deleteNhanVien")]
         public ActionResult deleteNhanVien(int maCv, int? maNV)
         {
             if (maNV == null)
@@ -139,26 +139,60 @@ namespace QLDA.Areas.Admin.Controllers
         }
 
 
+        public ActionResult dsNhanVienTrongCongViec(int id = 0)
+        {
+            if( id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var query1 = db.tbl_NhanVienThamGiaCongViec.Where(y => y.MaCongViec == id)
+                          .Select(x => x.MaNV);
+
+            var maDuAn = db.tbl_CongViec.Where(cv => cv.MaDuAn == id).Select(cv => cv.MaDuAn).FirstOrDefault();
+
+            var query2 = db.tbl_ThamGiaDuAn.Where(y => query1.Contains(y.MaDuAn))
+                           .Select(x => x.MaNV);
+            var items = db.tbl_NhanVien.Where(x => !query1.Contains(x.MaNV) && query2.Contains(x.MaNV));
 
 
+            return PartialView("_dsNhanVienCongViec", items);
+        }
 
 
+        [HttpPost]
+        public ActionResult setLeader(int maNV, int maCV)
+        {
+            if (maNV == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            try
+            {
+                tbl_NhanVienThamGiaCongViec tg = (from c in db.tbl_NhanVienThamGiaCongViec
+                                                  where c.MaNV == maNV && c.MaCongViec == maCV
+                                                  select c).FirstOrDefault();
+                tg.isManager = true;
+                db.Entry(tg).State = EntityState.Modified;
+                db.SaveChanges();
 
+                List<tbl_NhanVienThamGiaCongViec> nvConlai = db.tbl_NhanVienThamGiaCongViec.Where(x => x.MaNV != maNV && x.MaCongViec == maCV).ToList();
+                foreach (var item in nvConlai)
+                {
+                    item.isManager = false;
+                    db.Entry(item).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                db.SaveChanges();
+                return Json(new { message = true });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+            catch
+            {
+                return Json(new { message = false });
+            }
+        }
 
 
 

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -178,7 +179,9 @@ namespace QLDA.Areas.Admin.Controllers
                 job.TrangThai = false;
                 db.Entry(job).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+              
             }
+            
 
             //try
             //{
@@ -203,15 +206,17 @@ namespace QLDA.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public ActionResult addCongViecCon(int maDa, string mucTieu, string chiTiet, float tg)
+        public ActionResult addCongViecCon(int maDa, int maCv, string tenCv, string chiTiet, float deadLine)
         {
+      
             try
             {
                 tbl_CongViec myItem = new tbl_CongViec();
                 myItem.MaDuAn = maDa;
-                myItem.MucTieu = mucTieu;
+                myItem.ParentID = maCv;
+                myItem.MucTieu = tenCv;
                 myItem.ChiThietCongViec = chiTiet;
-                myItem.ThoiGianHoanThanh = tg;
+                myItem.ThoiGianHoanThanh = deadLine;
                 myItem.NgayTao = DateTime.Now;
                 myItem.TrangThai = true;
                 db.tbl_CongViec.Add(myItem);
@@ -224,158 +229,6 @@ namespace QLDA.Areas.Admin.Controllers
                 return Json(new { message = false });
             }
         }
-
-
-
-        [HttpPost]
-        public ActionResult editCongViecCon(int MaCongViec, string mucTieu, string chiTiet, float tg)
-        {
-            if (MaCongViec == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            try
-            {
-                tbl_CongViec congViec = (from c in db.tbl_CongViec
-                                         where c.MaCongViec == MaCongViec
-                                         select c).FirstOrDefault();
-                congViec.MucTieu = mucTieu;
-                congViec.ChiThietCongViec = chiTiet;
-                congViec.ThoiGianHoanThanh = tg;
-                db.Entry(congViec).State = EntityState.Modified;
-                db.SaveChanges();
-                //da.dsNhanVien(myItem.MaDuAn);
-                //da.dsNhanVienInDuAn(myItem.MaDuAn);
-                return Json(new { message = true });
-
-            }
-            catch
-            {
-                return Json(new { message = false });
-            }
-        }
-
-        [HttpPost, ActionName("deleteCongViec")]
-        public ActionResult deleteCongViecCon(int maCongViec)
-        {
-            if (maCongViec == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            try
-            {
-                tbl_CongViec congViec = (from c in db.tbl_CongViec
-                                         where c.MaCongViec == maCongViec
-                                         select c).FirstOrDefault();
-                congViec.TrangThai = false;
-                db.Entry(congViec).State = EntityState.Modified;
-                db.SaveChanges();
-                //da.dsNhanVien(myItem.MaDuAn);
-                //da.dsNhanVienInDuAn(myItem.MaDuAn);
-                return Json(new { message = true });
-
-            }
-            catch
-            {
-                return Json(new { message = false });
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // GET: Admin/CongViec/Details/5
@@ -397,18 +250,49 @@ namespace QLDA.Areas.Admin.Controllers
         {
             var query1 = db.tbl_CongViec.Where(y => y.MaCongViec == id)
                           .Select(x => x.MaDuAn);
+
+            var parentId = db.tbl_CongViec.Where(y => y.MaCongViec == id && y.ParentID != null)
+                          .Select(x => x.ParentID);
             var query2 = db.tbl_ThamGiaDuAn.Where(y => query1.Contains(y.MaDuAn))
                           .Select(x => x.MaNV);
             //var query3 = db.tbl_NhanVien.Where(y => query2.Contains(y.MaNV))
             //               .Select(x => x.MaNV);
             var query4 = db.tbl_NhanVienThamGiaCongViec.Where(y => y.MaCongViec == id)
                             .Select(x => x.MaNV);
+
+            int parentIdValue = 0;
+            if (parentId.Any())
+            {
+                parentIdValue = (int)parentId.FirstOrDefault();
+            }
+
             var items = db.tbl_NhanVien.Where(x => query2.Contains(x.MaNV) && !query4.Contains(x.MaNV));
+
+
+            if (parentIdValue != 0)
+            {
+                var cv = db.tbl_CongViec.Where(y => y.MaCongViec == parentIdValue)
+                                        .Select(x => x.MaCongViec);
+                query1 = db.tbl_CongViec.Where(y => cv.Contains(y.MaCongViec))
+                                        .Select(x => x.MaDuAn);
+                query2 = db.tbl_NhanVienThamGiaCongViec.Where(y => y.MaCongViec == parentIdValue)
+                           .Select(x => x.MaNV);
+                var query3 = db.tbl_ThamGiaDuAn.Where(y => query1.Contains(y.MaDuAn))
+                         .Select(x => x.MaNV);
+                int maCv = (int)cv.FirstOrDefault();
+                query4 = db.tbl_NhanVienThamGiaCongViec.Where(y => y.MaCongViec == id)
+                                .Select(x => x.MaNV);
+                items = db.tbl_NhanVien.Where(x => query2.Contains(x.MaNV) && !query4.Contains(x.MaNV) && query3.Contains(x.MaNV));
+            }
+
+            
+             
             return PartialView("_dsNhanVienThamGia", items);
         }
 
         public ActionResult dsNhanVienInCongViec(int id)
         {
+            ViewBag.idCongViec = id;
             var query1 = db.tbl_CongViec.Where(y => y.MaCongViec == id)
                            .Select(x => x.MaDuAn);
             var query2 = db.tbl_ThamGiaDuAn.Where(y => query1.Contains(y.MaDuAn))
@@ -423,6 +307,62 @@ namespace QLDA.Areas.Admin.Controllers
 
 
 
+
+        //[HttpPost]
+        //public ActionResult editCongViecCon(int MaCongViec, string mucTieu, string chiTiet, float tg)
+        //{
+        //    if (MaCongViec == 0)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    try
+        //    {
+        //        tbl_CongViec congViec = (from c in db.tbl_CongViec
+        //                                 where c.MaCongViec == MaCongViec
+        //                                 select c).FirstOrDefault();
+        //        congViec.MucTieu = mucTieu;
+        //        congViec.ChiThietCongViec = chiTiet;
+        //        congViec.ThoiGianHoanThanh = tg;
+        //        db.Entry(congViec).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        //da.dsNhanVien(myItem.MaDuAn);
+        //        //da.dsNhanVienInDuAn(myItem.MaDuAn);
+        //        return Json(new { message = true });
+
+        //    }
+        //    catch
+        //    {
+        //        return Json(new { message = false });
+        //    }
+        //}
+
+        //[HttpPost, ActionName("deleteCongViec")]
+        //public ActionResult deleteCongViecCon(int maCongViec)
+        //{
+        //    if (maCongViec == 0)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    try
+        //    {
+        //        tbl_CongViec congViec = (from c in db.tbl_CongViec
+        //                                 where c.MaCongViec == maCongViec
+        //                                 select c).FirstOrDefault();
+        //        congViec.TrangThai = false;
+        //        db.Entry(congViec).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        //da.dsNhanVien(myItem.MaDuAn);
+        //        //da.dsNhanVienInDuAn(myItem.MaDuAn);
+        //        return Json(new { message = true });
+
+        //    }
+        //    catch
+        //    {
+        //        return Json(new { message = false });
+        //    }
+        //}
 
 
 

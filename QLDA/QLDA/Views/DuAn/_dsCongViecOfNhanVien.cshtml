@@ -1,0 +1,20 @@
+﻿@model IEnumerable<QLDA.Models.tbl_CongViec>
+
+@{ var i = 1;}
+@foreach (var item in Model)
+{
+    
+        <tr>
+
+            <td>@i</td>
+            <td class="">@item.MucTieu </td>
+            <td>@item.ChiThietCongViec</td>
+            <td><a href="/CongViec/Details/@item.MaCongViec">Chi tiết</a></td>
+        </tr>
+    
+    i++;
+}
+
+
+
+
